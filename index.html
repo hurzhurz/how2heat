@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1d21">
+  <meta name="description" content="Converts microwave package instructions (watt + time) to the power levels of your own microwave.">
+  <title>how2heat — microwave converter</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <h1>how2heat <span class="subtitle" data-i18n="subtitle">Mikrowellen-Rechner</span></h1>
+      <div class="header-actions">
+        <button id="btn-theme" class="icon-btn" aria-label="Toggle theme">◐</button>
+        <button id="btn-help" class="icon-btn" aria-label="Help">?</button>
+        <a id="btn-settings" class="icon-btn" href="settings.html" aria-label="Settings">⚙</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <fieldset class="device-box">
+      <legend data-i18n="microwave_label">Mikrowelle</legend>
+      <div id="device-chips" class="chip-list device-chips"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="power_legend">Empfohlene Leistung</legend>
+      <div id="preset-buttons" class="btn-grid"></div>
+      <div class="custom-row">
+        <input id="watt-custom" type="number" inputmode="numeric" min="1" max="2000" placeholder="W">
+        <button id="watt-custom-set" class="btn small" data-i18n="set_power">Setzen</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="time_legend">Zeit (Angabe auf Packung)</legend>
+      <div id="time-display" class="time-display">0:00</div>
+      <div class="time-group">
+        <span class="group-label" data-i18n="minutes">Minuten</span>
+        <div id="min-btns" class="btn-grid minutes"></div>
+        <div class="fine-row">
+          <button class="btn fine" id="min-minus">&minus;1</button>
+          <button class="btn fine" id="min-plus">+1</button>
+        </div>
+      </div>
+      <div class="time-group">
+        <span class="group-label" data-i18n="seconds">Sekunden</span>
+        <div id="sec-btns" class="btn-grid seconds"></div>
+        <div class="fine-row">
+          <button class="btn fine" id="sec-minus">&minus;5s</button>
+          <button class="btn fine" id="sec-plus">+5s</button>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset id="result-box">
+      <legend data-i18n="result_legend">Ergebnis</legend>
+      <div id="result-empty" class="result-empty" data-i18n="result_empty">Leistung und Zeit eingeben</div>
+      <div id="result-main" class="result-main hidden">
+        <div id="result-step" class="result-step"></div>
+        <div id="result-time" class="result-time"></div>
+        <div id="result-energy" class="result-energy"></div>
+        <button id="steps-toggle" class="link-btn" data-i18n="show_levels">Alle Stufen anzeigen</button>
+        <div id="steps-table" class="steps-table hidden"></div>
+      </div>
+    </fieldset>
+
+    <div class="page-meta">
+      <span>how2heat</span>
+      <span class="dot">·</span>
+      <span data-i18n="footer_tagline">mach's warm. richtig.</span>
+    </div>
+  </main>
+
+  <!-- ============ HELP MODAL ============ -->
+  <div id="help-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="modal-card">
+      <h2 id="help-title" data-i18n="help_title">Was ist das?</h2>
+      <p data-i18n="help_text"></p>
+      <p class="help-tip" data-i18n="help_tip"></p>
+      <p class="help-tip" data-i18n="help_install"></p>
+      <p class="help-disclaimer" data-i18n="help_disclaimer"></p>
+      <p class="help-links">
+        <a href="https://github.com/hurzhurz/how2heat" target="_blank" rel="noopener">github.com/hurzhurz/how2heat</a>
+        <span class="dot">·</span>
+        <span>MIT</span>
+      </p>
+      <button id="help-close" class="btn" data-i18n="help_close">Alles klar</button>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="state.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+</body>
+</html>

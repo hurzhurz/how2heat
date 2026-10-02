@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a1d21">
+  <meta name="description" content="Settings for how2heat: microwaves, power levels, time steps, presets.">
+  <title>how2heat — settings</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <h1><a class="back-link" href="index.html">&larr; how2heat</a>
+        <span class="subtitle" data-i18n="tab_settings">Einstellungen</span></h1>
+      <div class="header-actions">
+        <button id="btn-theme" class="icon-btn" aria-label="Toggle theme">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <fieldset>
+      <legend data-i18n="language_legend">Sprache</legend>
+      <nav id="lang-bar" class="lang-bar" aria-label="Language"></nav>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="settings_devices">Mikrowellen</legend>
+      <div id="set-devices" class="chip-list"></div>
+      <div class="custom-row">
+        <input id="set-device-new" type="text" data-i18n-placeholder="device_placeholder" placeholder="Name der neuen Mikrowelle">
+        <button id="set-device-add" class="btn small" data-i18n="add">Hinzufügen</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="settings_active">Ausgewählte Mikrowelle</legend>
+      <label class="field">
+        <span data-i18n="name">Name</span>
+        <input id="set-name" type="text">
+      </label>
+      <label class="field">
+        <span data-i18n="max_power">Maximale Leistung (W)</span>
+        <input id="set-watt" type="number" inputmode="numeric" min="100" max="3000">
+      </label>
+      <div class="field">
+        <span id="levels-legend" data-i18n="levels_pct">Stufen (%)</span>
+        <div class="mode-row">
+          <button id="mode-percent" class="btn small" data-i18n="mode_percent">In %</button>
+          <button id="mode-watt" class="btn small" data-i18n="mode_watt">In W</button>
+        </div>
+        <div id="set-steps" class="chip-list"></div>
+        <div class="custom-row">
+          <input id="set-step-new" type="number" inputmode="numeric" min="1" placeholder="%">
+          <button id="set-step-add" class="btn small" data-i18n="add">Hinzufügen</button>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="timing_legend">Zeit-Taktung der Mikrowelle</legend>
+      <p class="hint" data-i18n="timing_hint">Aufrundung der Zielzeit. Regeln: „bis Zeit → Schritt“.</p>
+      <div id="set-timing" class="timing-list"></div>
+      <button id="set-timing-add" class="btn small" data-i18n="add_rule">Regel hinzufügen</button>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="presets_legend">Schnellwahl-Wattzahlen</legend>
+      <div id="set-presets" class="chip-list"></div>
+      <div class="custom-row">
+        <input id="set-preset-new" type="number" inputmode="numeric" min="1" max="2000" placeholder="W">
+        <button id="set-preset-add" class="btn small" data-i18n="add">Hinzufügen</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="minutes_legend">Minuten-Buttons</legend>
+      <div id="set-minbtns" class="chip-list"></div>
+      <div class="custom-row">
+        <input id="set-minbtn-new" type="number" inputmode="numeric" min="0" max="59" placeholder="min">
+        <button id="set-minbtn-add" class="btn small" data-i18n="add">Hinzufügen</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="seconds_legend">Sekunden-Buttons</legend>
+      <div id="set-secbtns" class="chip-list"></div>
+      <div class="custom-row">
+        <input id="set-secbtn-new" type="number" inputmode="numeric" min="0" max="59" placeholder="s">
+        <button id="set-secbtn-add" class="btn small" data-i18n="add">Hinzufügen</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="tiebreak_legend">Gleichstand-Regel</legend>
+      <label class="field">
+        <span data-i18n="tiebreak_question">Bei gleichem Energiefehler gewinnt:</span>
+        <select id="set-tiebreak">
+          <option value="lower" data-i18n="tie_lower">Niedrigere Leistung</option>
+          <option value="higher" data-i18n="tie_higher">Höhere Leistung</option>
+          <option value="shorter" data-i18n="tie_shorter">Kürzere Zeit</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="data_legend">Daten</legend>
+      <div class="data-row">
+        <button id="btn-export" class="btn" data-i18n="export">Exportieren</button>
+        <button id="btn-import" class="btn" data-i18n="import">Importieren</button>
+        <input id="import-file" type="file" accept="application/json,.json" class="hidden">
+      </div>
+      <button id="btn-reset" class="btn danger" data-i18n="reset">Auf Standard zurücksetzen</button>
+      <div id="import-msg" class="hint"></div>
+    </fieldset>
+
+    <div class="page-meta">
+      <span>how2heat</span>
+      <span class="dot">·</span>
+      <span data-i18n="footer_tagline">mach's warm. richtig.</span>
+      <span class="dot">·</span>
+      <a href="https://github.com/hurzhurz/how2heat" target="_blank" rel="noopener">MIT · github.com/hurzhurz/how2heat</a>
+    </div>
+  </main>
+
+  <script src="i18n.js"></script>
+  <script src="state.js"></script>
+  <script src="settings.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+</body>
+</html>
